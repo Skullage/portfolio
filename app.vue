@@ -11,10 +11,23 @@
 </template>
 <script>
 import NavBar from '@/components/NavBar.vue';
+import { useThemeStore } from '@/store/index';
 
 export default {
 	components: {
 		NavBar
+	},
+	setup() {
+		return { store: useThemeStore() };
+	},
+	created() {
+		if (
+			localStorage.theme === 'dark' ||
+			(!('theme' in localStorage) &&
+				window.matchMedia('(prefers-color-scheme: dark)').matches)
+		) {
+			this.store.toggleTheme('dark');
+		}
 	}
 };
 </script>
