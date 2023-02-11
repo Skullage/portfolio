@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@iconify/vue": "^4.1.0",
+    "autoprefixer": "^10.4.13",
+    "nuxt": "^3.1.2",
+    "postcss": "^8.4.19",
+    "postcss-import": "^15.1.0",
+    "postcss-nesting": "^10.2.0",
+    "prettier": "^2.8.1",
+    "prettier-plugin-tailwindcss": "^0.2.1",
+    "sass": "^1.57.1",
+    "sass-loader": "10.1.1",
+    "tailwindcss": "^3.2.4",
+    "vue-i18n": "^9.2.2"
+  },
+  "dependencies": {
+    "@nuxt/image-edge": "^1.0.0-27919678.2f5b64b",
+    "vercel": "^28.15.0"
+  }
+}
