@@ -4,7 +4,7 @@
 		:class="[{ '-translate-y-full opacity-0': !show }]"
 	>
 		<div
-			class="flex h-auto max-h-full w-full flex-col border bg-white lg:max-h-[80%] lg:w-1/2"
+			class="flex h-auto max-h-full w-full flex-col border bg-white dark:bg-dark dark:text-white lg:max-h-[80%] lg:w-1/2"
 		>
 			<h3 class="modal-title mb-4 border-b py-8 text-center text-2xl">
 				<slot name="title">Заголовок</slot>

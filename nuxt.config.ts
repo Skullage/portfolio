@@ -18,7 +18,7 @@ export default defineNuxtConfig({
 			title: 'Портфолио',
 			meta: [{ name: 'description', content: 'Сайт-портфолио.' }],
 			bodyAttrs: {
-				// class: 'scroll-smooth'
+				class: 'bg-white dark:bg-dark'
 			},
 			htmlAttrs: {
 				lang: 'ru'

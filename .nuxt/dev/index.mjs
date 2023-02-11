@@ -786,7 +786,7 @@ const renderer$1 = /*#__PURE__*/Object.freeze({
   default: renderer
 });
 
-const _virtual__headStatic = {"headTags":"<meta charset=\"utf-8\">\n<title>Портфолио</title>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<meta name=\"description\" content=\"Сайт-портфолио.\">","bodyTags":"","bodyTagsOpen":"","htmlAttrs":" lang=\"ru\"","bodyAttrs":""};
+const _virtual__headStatic = {"headTags":"<meta charset=\"utf-8\">\n<title>Портфолио</title>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<meta name=\"description\" content=\"Сайт-портфолио.\">","bodyTags":"","bodyTagsOpen":"","htmlAttrs":" lang=\"ru\"","bodyAttrs":" class=\"bg-white dark:bg-dark\""};
 
 const _virtual__headStatic$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,

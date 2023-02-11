@@ -18,7 +18,7 @@
 						>
 							<NuxtLink
 								:to="item.link"
-								class="menu__link relative cursor-pointer p-2 font-bold uppercase"
+								class="menu__link relative cursor-pointer p-2 font-bold uppercase tracking-widest"
 								>{{ item.title }}</NuxtLink
 							>
 						</li>
@@ -54,8 +54,7 @@
 						icon="fluent:dark-theme-24-regular"
 						width="30"
 						height="30"
-						class="cursor-pointer"
-						style="color: white"
+						class="cursor-pointer text-white"
 						@click="store.toggleTheme('light')"
 					/>
 

@@ -2,7 +2,7 @@
 	<div>
 		<NavBar class="mb-5" />
 		<NuxtPage />
-		<footer class="footer bg-gray-200">
+		<footer class="footer bg-gray-200 dark:bg-black dark:text-white">
 			<div class="container mx-auto px-4">
 				<p class="py-4 text-center">{{ $t('copy') }}</p>
 			</div>

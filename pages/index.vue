@@ -8,12 +8,16 @@
 			>
 				<div class="hello__text slide-right max-lg:order-1">
 					<div class="about mb-8">
-						<h2 class="mb-3 text-3xl font-bold">{{ $t('greeting') }}</h2>
-						<p>{{ $t('prof') }}</p>
+						<h2 class="mb-3 text-3xl font-bold dark:text-white">
+							{{ $t('greeting') }}
+						</h2>
+						<p class="dark:text-white">{{ $t('prof') }}</p>
 					</div>
 					<div class="contacts mb-10">
 						<div class="contacts__phone mb-1 flex gap-x-3">
-							<h5 class="contacts__title w-24 flex-initial font-bold uppercase">
+							<h5
+								class="contacts__title w-24 flex-initial font-bold uppercase dark:text-white"
+							>
 								{{ $t('phone') }}
 							</h5>
 							<a href="tel:79279348061" class="text-gray-500 underline"
@@ -21,7 +25,9 @@
 							>
 						</div>
 						<div class="contacts__email mb-1 flex gap-x-3">
-							<h5 class="contacts__title w-24 flex-initial font-bold uppercase">
+							<h5
+								class="contacts__title w-24 flex-initial font-bold uppercase dark:text-white"
+							>
 								E-mail
 							</h5>
 							<a
@@ -31,16 +37,20 @@
 							>
 						</div>
 						<div class="contacts__social social flex items-center gap-x-3">
-							<h5 class="contacts__title w-24 flex-initial font-bold uppercase">
+							<h5
+								class="contacts__title w-24 flex-initial font-bold uppercase dark:text-white"
+							>
 								{{ $t('social') }}
 							</h5>
 							<ul class="contacts__social-list social__list flex gap-2">
 								<li class="social__item">
-									<a
-										href="http://vk.com/skullage"
-										class="social__link text-sky-700 duration-500 hover:text-black"
-									>
-										<Icon icon="uil:vk" width="32" height="32" />
+									<a href="http://vk.com/skullage" class="social__link">
+										<Icon
+											icon="cib:vk"
+											width="32"
+											height="32"
+											class="rounded-lg text-sky-700 duration-500 hover:text-black dark:bg-white dark:hover:bg-black dark:hover:text-white"
+										/>
 									</a>
 								</li>
 								<li class="social__item">
@@ -49,7 +59,7 @@
 											icon="simple-icons:telegram"
 											width="32"
 											height="32"
-											class="text-sky-600 duration-500 hover:text-black"
+											class="rounded-full text-sky-600 duration-500 hover:text-black dark:bg-white dark:hover:bg-black dark:hover:text-white"
 										/>
 									</a>
 								</li>
@@ -75,7 +85,7 @@
 							Связаться со мной
 						</button>
 						<a
-							class="rounded border border-gray-200 px-3 py-3.5 text-center text-black duration-500 hover:bg-gray-200"
+							class="rounded border border-gray-200 bg-transparent px-3 py-3.5 text-center text-black duration-500 hover:bg-dark hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-black"
 							href="/files/Summary.pdf"
 							target="_blank"
 						>
@@ -93,11 +103,13 @@
 				</div>
 			</section>
 			<section
-				class="section skills mb-20 flex flex-col justify-center overflow-hidden md:min-h-screen"
+				class="section skills mb-20 flex flex-col justify-center overflow-hidden dark:text-white md:min-h-screen"
 				v-intersection
 				id="skills"
 			>
-				<h2 class="mb-6 text-center text-3xl font-bold">{{ $t('skills') }}</h2>
+				<h2 class="mb-6 text-center text-3xl font-bold">
+					{{ $t('skills') }}
+				</h2>
 				<div class="flex flex-wrap gap-10">
 					<div class="soft-skills flex-1 text-center">
 						<h3 class="soft-skills__title fade-in mb-4 text-2xl font-bold">
@@ -115,7 +127,7 @@
 						</ul>
 					</div>
 					<div class="hard-skills flex-1 text-center">
-						<h3 class="hard-skills__title fade-in mb-4 text-2xl font-bold">
+						<h3 class="hard-skills__title fade-in font-bol mb-4 text-2xl">
 							{{ $t('hardSkills') }}
 						</h3>
 						<ul class="hard-skills__list">
@@ -142,9 +154,14 @@
 									/>
 								</span>
 
-								<span class="flex-0">{{ item.title }}</span>
+								<span class="flex-1">{{ item.title }}</span>
 								<div class="hard-skills__icon-wrapper flex-1">
-									<Icon :icon="item.iconName" width="32" height="32" />
+									<Icon
+										:icon="item.iconName"
+										width="48"
+										height="48"
+										class="rounded-full bg-white p-2"
+									/>
 								</div>
 							</li>
 						</ul>
@@ -152,7 +169,7 @@
 				</div>
 			</section>
 			<section
-				class="section education mb-20 flex flex-col items-center justify-center md:min-h-screen"
+				class="section education mb-20 flex flex-col items-center justify-center dark:text-white md:min-h-screen"
 				v-intersection
 				id="education"
 				v-if="false"
@@ -161,7 +178,7 @@
 				<p class="education__text slide-right">Закончил УГНТУ</p>
 			</section>
 			<section
-				class="section portfolio mb-20 flex flex-col justify-center overflow-hidden md:min-h-screen"
+				class="section portfolio mb-20 flex flex-col justify-center overflow-hidden dark:text-white md:min-h-screen"
 				v-intersection
 				id="projects"
 			>
@@ -172,7 +189,7 @@
 					class="mx-auto grid gap-y-16 gap-x-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
 				>
 					<div
-						class="portfolio__card card slide-right"
+						class="portfolio__card card slide-right cursor-pointer border p-4"
 						v-for="(item, index) in projects"
 						:key="index"
 						@click="showProjectInfo(index)"
@@ -181,7 +198,7 @@
 							<nuxt-img
 								:src="`/img/portfolio/${item.preview}`"
 								:alt="`Превью ${item.title}`"
-								class="card__image mb-4 cursor-pointer duration-500 hover:scale-125"
+								class="card__image mb-4 duration-500 hover:scale-125"
 								format="webp"
 							/>
 						</div>
@@ -276,7 +293,7 @@
 						<span>{{ item.date }}</span>
 					</p>
 					<div
-						class="modal__grid-gallery gallery mb-10 grid grid-flow-row grid-cols-2 grid-rows-[1fr_192px] items-center gap-6 md:grid-cols-4"
+						class="modal__grid-gallery gallery mb-10 grid grid-flow-row grid-cols-2 grid-rows-[1fr_auto] items-center gap-6 md:grid-cols-4"
 					>
 						<div
 							class="col-span-2 flex h-96 items-center justify-center md:col-span-4"
