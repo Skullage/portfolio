@@ -5,10 +5,10 @@ import { join } from 'node:path';
 import { mkdirSync } from 'node:fs';
 import { parentPort, threadId } from 'node:worker_threads';
 import { provider, isWindows } from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/std-env/dist/index.mjs';
-import { eventHandler, setHeaders, sendRedirect, defineEventHandler, handleCacheHeaders, createEvent, getRequestHeader, getRequestHeaders, setResponseHeader, createApp, createRouter as createRouter$1, lazyEventHandler, toNodeListener, getQuery, createError } from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/h3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, createEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, getRequestHeaders, setResponseHeader, createApp, createRouter as createRouter$1, toNodeListener, fetchWithEvent, lazyEventHandler, getQuery, createError } from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/h3/dist/index.mjs';
 import { createRenderer } from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/vue-bundle-renderer/dist/runtime.mjs';
 import devalue from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/@nuxt/devalue/dist/devalue.mjs';
-import { withoutBase, parseURL, withQuery, joinURL } from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/ufo/dist/index.mjs';
+import { parseURL, withoutBase, joinURL, withQuery } from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/ufo/dist/index.mjs';
 import destr from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/destr/dist/index.mjs';
 import { snakeCase } from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/scule/dist/index.mjs';
 import { createFetch as createFetch$1, Headers } from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/ofetch/dist/node.mjs';
@@ -16,7 +16,7 @@ import { createCall, createFetch } from 'file://C:/Users/Skullage/Desktop/ReactA
 import { createHooks } from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/hookable/dist/index.mjs';
 import { hash } from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/ohash/dist/index.mjs';
 import { createStorage } from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/unstorage/dist/drivers/fs.mjs';
+import unstorage_47drivers_47fs from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/unstorage/drivers/fs.mjs';
 import defu from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/defu/dist/defu.mjs';
 import { toRouteMatcher, createRouter } from 'file://C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/radix3/dist/index.mjs';
 
@@ -74,79 +74,10 @@ const useStorage = () => storage;
 
 storage.mount('/assets', assets);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","base":"C:\\Users\\Skullage\\Desktop\\ReactApp\\port\\portfolio","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","base":"C:\\Users\\Skullage\\Desktop\\ReactApp\\port\\portfolio\\server","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","base":"C:\\Users\\Skullage\\Desktop\\ReactApp\\port\\portfolio\\.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","base":"C:\\Users\\Skullage\\Desktop\\ReactApp\\port\\portfolio\\.nuxt\\cache","ignore":["**/node_modules/**","**/.git/**"]}));
-
-function defineRenderHandler(handler) {
-  return eventHandler(async (event) => {
-    if (event.node.req.url.endsWith("/favicon.ico")) {
-      event.node.res.setHeader("Content-Type", "image/x-icon");
-      event.node.res.end(
-        "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-      );
-      return;
-    }
-    const response = await handler(event);
-    if (!response) {
-      if (!event.node.res.writableEnded) {
-        event.node.res.statusCode = event.node.res.statusCode === 200 ? 500 : event.node.res.statusCode;
-        event.node.res.end(
-          "No response returned from render handler: " + event.node.req.url
-        );
-      }
-      return;
-    }
-    const nitroApp = useNitroApp();
-    await nitroApp.hooks.callHook("render:response", response, { event });
-    if (!event.node.res.headersSent && response.headers) {
-      for (const header in response.headers) {
-        event.node.res.setHeader(header, response.headers[header]);
-      }
-      if (response.statusCode) {
-        event.node.res.statusCode = response.statusCode;
-      }
-      if (response.statusMessage) {
-        event.node.res.statusMessage = response.statusMessage;
-      }
-    }
-    return typeof response.body === "string" ? response.body : JSON.stringify(response.body);
-  });
-}
-
-const config = useRuntimeConfig();
-const _routeRulesMatcher = toRouteMatcher(
-  createRouter({ routes: config.nitro.routeRules })
-);
-function createRouteRulesHandler() {
-  return eventHandler((event) => {
-    const routeRules = getRouteRules(event);
-    if (routeRules.headers) {
-      setHeaders(event, routeRules.headers);
-    }
-    if (routeRules.redirect) {
-      return sendRedirect(
-        event,
-        routeRules.redirect.to,
-        routeRules.redirect.statusCode
-      );
-    }
-  });
-}
-function getRouteRules(event) {
-  event.context._nitro = event.context._nitro || {};
-  if (!event.context._nitro.routeRules) {
-    const path = new URL(event.node.req.url, "http://localhost").pathname;
-    event.context._nitro.routeRules = getRouteRulesForPath(
-      withoutBase(path, useRuntimeConfig().app.baseURL)
-    );
-  }
-  return event.context._nitro.routeRules;
-}
-function getRouteRulesForPath(path) {
-  return defu({}, ..._routeRulesMatcher.matchAll(path).reverse());
-}
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:\\Users\\Skullage\\Desktop\\ReactApp\\port\\portfolio","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:\\Users\\Skullage\\Desktop\\ReactApp\\port\\portfolio\\server","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:\\Users\\Skullage\\Desktop\\ReactApp\\port\\portfolio\\.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:\\Users\\Skullage\\Desktop\\ReactApp\\port\\portfolio\\.nuxt\\cache","ignore":["**/node_modules/**","**/.git/**"]}));
 
 const defaultCacheOptions = {
   name: "_",
@@ -312,7 +243,7 @@ function defineCachedEventHandler(handler, opts = defaultCacheOptions) {
       const body = await handler(event) || _resSendBody;
       const headers = event.node.res.getHeaders();
       headers.etag = headers.Etag || headers.etag || `W/"${hash(body)}"`;
-      headers["last-modified"] = headers["Last-Modified"] || headers["last-modified"] || new Date().toUTCString();
+      headers["last-modified"] = headers["Last-Modified"] || headers["last-modified"] || (/* @__PURE__ */ new Date()).toUTCString();
       const cacheControl = [];
       if (opts.swr) {
         if (opts.maxAge) {
@@ -382,9 +313,93 @@ function cloneWithProxy(obj, overrides) {
 }
 const cachedEventHandler = defineCachedEventHandler;
 
+const config = useRuntimeConfig();
+const _routeRulesMatcher = toRouteMatcher(
+  createRouter({ routes: config.nitro.routeRules })
+);
+function createRouteRulesHandler() {
+  return eventHandler((event) => {
+    const routeRules = getRouteRules(event);
+    if (routeRules.headers) {
+      setHeaders(event, routeRules.headers);
+    }
+    if (routeRules.redirect) {
+      return sendRedirect(
+        event,
+        routeRules.redirect.to,
+        routeRules.redirect.statusCode
+      );
+    }
+    if (routeRules.proxy) {
+      let target = routeRules.proxy.to;
+      if (target.endsWith("/**")) {
+        let targetPath = event.path;
+        const strpBase = routeRules.proxy._proxyStripBase;
+        if (strpBase) {
+          targetPath = withoutBase(targetPath, strpBase);
+        }
+        target = joinURL(target.slice(0, -3), targetPath);
+      }
+      return proxyRequest(event, target, {
+        fetch: $fetch.raw,
+        ...routeRules.proxy
+      });
+    }
+  });
+}
+function getRouteRules(event) {
+  event.context._nitro = event.context._nitro || {};
+  if (!event.context._nitro.routeRules) {
+    const path = new URL(event.node.req.url, "http://localhost").pathname;
+    event.context._nitro.routeRules = getRouteRulesForPath(
+      withoutBase(path, useRuntimeConfig().app.baseURL)
+    );
+  }
+  return event.context._nitro.routeRules;
+}
+function getRouteRulesForPath(path) {
+  return defu({}, ..._routeRulesMatcher.matchAll(path).reverse());
+}
+
 const plugins = [
   
 ];
+
+function defineRenderHandler(handler) {
+  return eventHandler(async (event) => {
+    if (event.node.req.url.endsWith("/favicon.ico")) {
+      event.node.res.setHeader("Content-Type", "image/x-icon");
+      event.node.res.end(
+        "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      );
+      return;
+    }
+    const response = await handler(event);
+    if (!response) {
+      if (!event.node.res.writableEnded) {
+        event.node.res.statusCode = event.node.res.statusCode === 200 ? 500 : event.node.res.statusCode;
+        event.node.res.end(
+          "No response returned from render handler: " + event.node.req.url
+        );
+      }
+      return;
+    }
+    const nitroApp = useNitroApp();
+    await nitroApp.hooks.callHook("render:response", response, { event });
+    if (!event.node.res.headersSent && response.headers) {
+      for (const header in response.headers) {
+        event.node.res.setHeader(header, response.headers[header]);
+      }
+      if (response.statusCode) {
+        event.node.res.statusCode = response.statusCode;
+      }
+      if (response.statusMessage) {
+        event.node.res.statusMessage = response.statusMessage;
+      }
+    }
+    return typeof response.body === "string" ? response.body : JSON.stringify(response.body);
+  });
+}
 
 function hasReqHeader(event, name, includes) {
   const value = getRequestHeader(event, name);
@@ -394,7 +409,7 @@ function isJsonRequest(event) {
   return hasReqHeader(event, "accept", "application/json") || hasReqHeader(event, "user-agent", "curl/") || hasReqHeader(event, "user-agent", "httpie/") || event.node.req.url?.endsWith(".json") || event.node.req.url?.includes("/api/");
 }
 function normalizeError(error) {
-  const cwd = process.cwd();
+  const cwd = typeof process.cwd === "function" ? process.cwd() : "/";
   const stack = (error.stack || "").split("\n").splice(1).filter((line) => line.includes("at ")).map((line) => {
     const text = line.replace(cwd + "/", "./").replace("webpack:/", "").replace("file://", "").trim();
     return {
@@ -484,6 +499,24 @@ function createNitroApp() {
   });
   const router = createRouter$1();
   h3App.use(createRouteRulesHandler());
+  const localCall = createCall(toNodeListener(h3App));
+  const localFetch = createFetch(localCall, globalThis.fetch);
+  const $fetch = createFetch$1({
+    fetch: localFetch,
+    Headers,
+    defaults: { baseURL: config.app.baseURL }
+  });
+  globalThis.$fetch = $fetch;
+  h3App.use(
+    eventHandler((event) => {
+      const envContext = event.node.req.__unenv__;
+      if (envContext) {
+        Object.assign(event.context, envContext);
+      }
+      event.fetch = (req, init) => fetchWithEvent(event, req, init, { fetch: localFetch });
+      event.$fetch = (req, init) => fetchWithEvent(event, req, init, { fetch: $fetch });
+    })
+  );
   for (const h of handlers) {
     let handler = h.lazy ? lazyEventHandler(h.handler) : h.handler;
     if (h.middleware || !h.route) {
@@ -506,14 +539,6 @@ function createNitroApp() {
     }
   }
   h3App.use(config.app.baseURL, router);
-  const localCall = createCall(toNodeListener(h3App));
-  const localFetch = createFetch(localCall, globalThis.fetch);
-  const $fetch = createFetch$1({
-    fetch: localFetch,
-    Headers,
-    defaults: { baseURL: config.app.baseURL }
-  });
-  globalThis.$fetch = $fetch;
   const app = {
     hooks,
     h3App,

@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
 	ssr: false,
-	modules: ['@nuxt/image-edge'],
+	modules: ['@nuxt/image-edge', '@pinia/nuxt'],
 	css: ['~/assets/css/main.css'],
 	postcss: {
 		plugins: {

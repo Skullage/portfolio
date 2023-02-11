@@ -23,6 +23,8 @@
   },
   "dependencies": {
     "@nuxt/image-edge": "^1.0.0-27919678.2f5b64b",
+    "@pinia/nuxt": "^0.4.6",
+    "pinia": "^2.0.30",
     "vercel": "^28.15.0"
   }
 }

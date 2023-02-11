@@ -67,6 +67,9 @@
       "#image/*": [
         "node_modules/@nuxt/image-edge/dist/runtime/*"
       ],
+      "pinia": [
+        "node_modules/pinia/dist/pinia"
+      ],
       "#head": [
         "node_modules/nuxt/dist/head/runtime"
       ],
