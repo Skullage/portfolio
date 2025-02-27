@@ -1,1 +1,0 @@
-export { default } from "file:///C:/Users/Skullage/Desktop/ReactApp/port/portfolio/node_modules/@nuxt/vite-builder/dist/runtime/vite-node.mjs"

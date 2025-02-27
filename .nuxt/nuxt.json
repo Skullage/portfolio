@@ -1,9 +1,9 @@
 {
-  "_hash": "vi3yya4jiJ",
+  "_hash": "j6WNUCOIbZRa6MR4Z7WMBHP5ilVj8RrHPu6Mepk4hlo",
   "project": {
     "rootDir": "C:/Users/Skullage/Desktop/ReactApp/port/portfolio"
   },
   "versions": {
-    "nuxt": "3.2.0"
+    "nuxt": "3.15.4"
   }
 }
