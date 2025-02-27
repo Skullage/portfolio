@@ -8,9 +8,7 @@ export const useThemeStore = defineStore('theme', {
 	actions: {
 		toggleTheme(mode) {
 			this.themeMode = mode;
-
 			localStorage.setItem('theme', mode);
-
 			if (mode == 'dark') {
 				document.documentElement.classList.add('dark');
 			} else {

@@ -1,5 +1,5 @@
 <template>
-	<main class="main">
+	<main class="scrollbar">
 		<div class="container mx-auto px-4">
 			<section
 				class="section hello mb-20 flex flex-wrap gap-10 overflow-hidden md:min-h-screen md:items-center md:justify-around"
@@ -49,7 +49,7 @@
 											icon="cib:vk"
 											width="32"
 											height="32"
-											class="rounded-lg text-sky-700 duration-500 hover:text-black dark:bg-white dark:hover:bg-black dark:hover:text-white"
+											class="rounded-full text-sky-700 duration-500 hover:text-black dark:bg-white dark:hover:bg-black dark:hover:text-white"
 										/>
 									</a>
 								</li>
@@ -127,7 +127,9 @@
 						</ul>
 					</div>
 					<div class="hard-skills flex-1 text-center">
-						<h3 class="hard-skills__title fade-in font-bol mb-4 text-2xl">
+						<h3
+							class="hard-skills__title fade-in font-bol mb-4 text-2xl font-bold"
+						>
 							{{ $t('hardSkills') }}
 						</h3>
 						<ul class="hard-skills__list">
@@ -138,7 +140,8 @@
 								:style="getAnimDelay(index)"
 							>
 								<span
-									class="hard-skills__item-rating flex basis-1/2 justify-end"
+									class="hard-skills__item-rating flex justify-end"
+									v-if="false"
 								>
 									<Icon
 										class="text-amber-500"
@@ -154,14 +157,16 @@
 									/>
 								</span>
 
-								<span class="flex-1">{{ item.title }}</span>
+								<span class="flex-1 text-right">{{ item.title }}</span>
 								<div class="hard-skills__icon-wrapper flex-1">
-									<Icon
-										:icon="item.iconName"
-										width="48"
-										height="48"
-										class="rounded-full bg-white p-2"
-									/>
+									<div class="w-12 rounded-full bg-white">
+										<Icon
+											:icon="item.iconName"
+											width="48"
+											height="48"
+											class="p-2.5"
+										/>
+									</div>
 								</div>
 							</li>
 						</ul>
@@ -172,10 +177,11 @@
 				class="section education mb-20 flex flex-col items-center justify-center dark:text-white md:min-h-screen"
 				v-intersection
 				id="education"
-				v-if="false"
 			>
-				<h2 class="mb-10 text-center text-3xl font-bold">Образование</h2>
-				<p class="education__text slide-right">Закончил УГНТУ</p>
+				<h2 class="mb-10 text-center text-3xl font-bold">
+					{{ $t('education') }}
+				</h2>
+				<p class="education__text slide-right" v-html="$t('educationText')"></p>
 			</section>
 			<section
 				class="section portfolio mb-20 flex flex-col justify-center overflow-hidden dark:text-white md:min-h-screen"
@@ -293,7 +299,7 @@
 						<span>{{ item.date }}</span>
 					</p>
 					<div
-						class="modal__grid-gallery gallery mb-10 grid grid-flow-row grid-cols-2 grid-rows-[1fr_auto] items-center gap-6 md:grid-cols-4"
+						class="modal__grid-gallery gallery mb-10 grid grid-flow-row grid-cols-2 grid-rows-[1fr_200px] items-center gap-6 md:grid-cols-4"
 					>
 						<div
 							class="col-span-2 flex h-96 items-center justify-center md:col-span-4"
@@ -313,7 +319,7 @@
 						>
 							<nuxt-img
 								:src="`/img/portfolio/${el}`"
-								class="gallery__img max-h-full"
+								class="gallery__img h-full w-full object-contain"
 								:alt="`Изображение ${item.title} № ${id + 2}`"
 								format="webp"
 							/>
@@ -321,6 +327,13 @@
 					</div>
 				</template>
 				<template v-slot:footer>
+					<a
+						class="modal-footer__button cursor-pointer rounded border border-indigo-600 px-4 py-2 hover:bg-indigo-600 hover:text-white"
+						:href="item.githubLink"
+						target="_blank"
+					>
+						{{ $t('github') }}
+					</a>
 					<a
 						class="modal-footer__button cursor-pointer rounded border border-indigo-600 px-4 py-2 hover:bg-indigo-600 hover:text-white"
 						:href="item.href"
@@ -377,37 +390,37 @@ export default {
 			hardSkills: [
 				{
 					title: 'HTML',
-					stars: 3,
+					stars: 5,
 					iconName: 'skill-icons:html'
 				},
 				{
 					title: 'CSS',
-					stars: 1,
+					stars: 5,
 					iconName: 'skill-icons:css'
 				},
 				{
 					title: 'SCSS',
-					stars: 1,
+					stars: 5,
 					iconName: 'logos:sass'
 				},
 				{
 					title: 'JavaScript',
-					stars: 4,
+					stars: 3,
 					iconName: 'skill-icons:javascript'
 				},
 				{
 					title: 'Vue',
-					stars: 3,
+					stars: 5,
 					iconName: 'logos:vue'
 				},
 				{
 					title: 'Nuxt',
-					stars: 3,
+					stars: 5,
 					iconName: 'logos:nuxt-icon'
 				},
 				{
 					title: 'Git',
-					stars: 5,
+					stars: 3,
 					iconName: 'icon-park:github'
 				},
 				{
@@ -424,6 +437,11 @@ export default {
 					title: 'Bootstrap',
 					stars: 5,
 					iconName: 'skill-icons:bootstrap'
+				},
+				{
+					title: 'Photoshop',
+					stars: 3,
+					iconName: 'logos:adobe-photoshop'
 				}
 			],
 			softSkills: [
@@ -448,7 +466,8 @@ export default {
 						'dart/dart5.png',
 						'dart/dart6.png',
 						'dart/dart7.png'
-					]
+					],
+					githubLink: 'https://github.com/Skullage/Dart'
 				},
 				{
 					title: 'Delivery',
@@ -465,7 +484,8 @@ export default {
 						'delivery/delivery5.png',
 						'delivery/delivery6.png',
 						'delivery/delivery7.png'
-					]
+					],
+					githubLink: 'https://github.com/Skullage/Delivery'
 				},
 				{
 					title: 'Le Corte',
@@ -480,7 +500,8 @@ export default {
 						'lecorte/lecorte3.png',
 						'lecorte/lecorte4.png',
 						'lecorte/lecorte5.png'
-					]
+					],
+					githubLink: 'https://github.com/Skullage/LeCorte'
 				},
 				{
 					title: 'Porten',
@@ -496,7 +517,8 @@ export default {
 						'porten/porten4.png',
 						'porten/porten5.png',
 						'porten/porten6.png'
-					]
+					],
+					githubLink: 'https://github.com/Skullage/Porten'
 				},
 				{
 					title: 'Saka',
@@ -514,21 +536,24 @@ export default {
 						'saka/saka6.png',
 						'saka/saka7.png',
 						'saka/saka8.png'
-					]
+					],
+					githubLink: 'https://github.com/Skullage/Saka'
 				},
 				{
-					title: 'PW Companion',
+					title: 'Hangman',
 					desc: this.$t('projectDesc5'),
-					stack: 'HTML, CSS, JavaScript, VueJS 3, Bootstrap 5',
-					date: '2022',
+					stack:
+						'HTML, CSS, JavaScript, Vue 3, Vuex, Vue router, Tailwind CSS, Socket.io, Node JS, Express, Vite',
+					date: '2023',
 					preview: '',
-					href: 'https://pw-companion.vercel.app',
+					href: 'https://hangman-tan-pi.vercel.app',
 					images: [
-						'pw_companion/pw_companion.png',
-						'pw_companion/pw_companion2.png',
-						'pw_companion/pw_companion3.png',
-						'pw_companion/pw_companion4.png'
-					]
+						'hangman/1.png',
+						'hangman/2.png',
+						'hangman/3.png',
+						'hangman/4.png'
+					],
+					githubLink: 'https://github.com/Skullage/hangman'
 				}
 			]
 		};

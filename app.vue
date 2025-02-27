@@ -20,7 +20,7 @@ export default {
 	setup() {
 		return { store: useThemeStore() };
 	},
-	created() {
+	mounted() {
 		if (
 			localStorage.theme === 'dark' ||
 			(!('theme' in localStorage) &&

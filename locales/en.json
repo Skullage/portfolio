@@ -15,13 +15,16 @@
 	"myProjects": "My projects",
 	"stack": "Stack",
 	"date": "Date",
+	"education": "Education",
+	"educationText": "Studied at the <a href=\"https://rusoil.net/ru/\" class=\"font-bold text-gray-500 underline\">Ufa State Petroleum Technological University</a> under the bachelor's program <b class=\"font-bold\">Applied Informatics</b>, profile <b class=\"font-bold\">Information Technology and Computer Modeling.</b>",
 	"demo": "Demo",
+	"github": "Code on github",
 	"close": "Close",
 	"projectDesc0": "",
 	"projectDesc1": "",
 	"projectDesc2": "",
 	"projectDesc3": "",
 	"projectDesc4": "",
-	"projectDesc5": "An unfinished project for various calculations for the online game Perfect World.",
-	"copy": "© 2023 Evgeny Dogonadze."
+	"projectDesc5": "A set of mini-games. When writing the server part, Node JS, Express and Socket.io were used. For the frontend part, Vue 3 and Tailwind CSS were used.",
+	"copy": "© 2025 Evgeny Dogonadze."
 }
